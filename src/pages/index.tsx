@@ -16,7 +16,7 @@ const Home: NextPage = () => {
     // async function fetchTrending() {
     //   try {
     //     const response = await axios.get(
-    //       `${process.env.NEXT_PUBLIC_BASE_URL}trending/all/day?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+    //       `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
     //     );
     //     setTrendingData(response.data.results);
     //   } catch (error) {
@@ -26,7 +26,7 @@ const Home: NextPage = () => {
     // async function fetchMovies() {
     //   try {
     //     const response = await axios.get(
-    //       `${process.env.NEXT_PUBLIC_BASE_URL}movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+    //       `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
     //     );
     //     setMovieDate(response.data.results);
     //   } catch (error) {
@@ -36,7 +36,7 @@ const Home: NextPage = () => {
     // async function fetchShows() {
     //   try {
     //     const response = await axios.get(
-    //       `${process.env.NEXT_PUBLIC_BASE_URL}tv/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+    //       `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
     //     );
     //     setShowsData(response.data.results);
     //   } catch (error) {
