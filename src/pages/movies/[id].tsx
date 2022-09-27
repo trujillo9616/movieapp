@@ -24,7 +24,7 @@ const MovieDetails: React.FC = () => {
     const fetchMovieData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}movie/${id}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&append_to_response=credits,images,videos,recommendations,watch/providers`
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&append_to_response=credits,images,videos,recommendations,watch/providers`
         );
         setMovieData(response.data);
         setLoading(false);
