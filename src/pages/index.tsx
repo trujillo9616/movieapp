@@ -6,8 +6,6 @@ import axios from "axios";
 import { movieList, seriesList } from "../utils/obj";
 import SimpleSlider from "../components/Slider";
 import Footer from "../components/Footer";
-import MovieCard from "../components/MovieCard";
-import TvShowCard from "../components/TvShowCard";
 
 const Home: NextPage = () => {
   const [trendingData, setTrendingData] = useState([]);
