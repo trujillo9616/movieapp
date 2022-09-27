@@ -13,49 +13,46 @@ const Home: NextPage = () => {
   const [showsData, setShowsData] = useState<any>([]);
 
   useEffect(() => {
-    // async function fetchTrending() {
-    //   try {
-    //     const response = await axios.get(
-    //       `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-    //     );
-    //     setTrendingData(response.data.results);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-    // async function fetchMovies() {
-    //   try {
-    //     const response = await axios.get(
-    //       `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-    //     );
-    //     setMovieDate(response.data.results);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-    // async function fetchShows() {
-    //   try {
-    //     const response = await axios.get(
-    //       `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-    //     );
-    //     setShowsData(response.data.results);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
-    // fetchTrending();
-    // fetchMovies();
-    // fetchShows();
+    async function fetchTrending() {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+        );
+        setTrendingData(response.data.results);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    async function fetchMovies() {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+        );
+        setMovieDate(response.data.results);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    async function fetchShows() {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+        );
+        setShowsData(response.data.results);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchTrending();
+    fetchMovies();
+    fetchShows();
 
     return () => {
       setTrendingData([]);
-      setMovieDate(movieList);
-      setShowsData(seriesList);
+      setMovieDate([]);
+      setShowsData([]);
     };
   }, []);
-
-  console.log("Movie List: ", moviesData);
-  console.log("Show List: ", showsData);
 
   return (
     <>
@@ -72,6 +69,7 @@ const Home: NextPage = () => {
           <Header />
         </div>
         <div>
+          <SimpleSlider title="Trending" data={trendingData} />
           <SimpleSlider title={"Trending Movies!"} data={moviesData} />
           <SimpleSlider title={"Trending TV Shows!"} data={showsData} />
         </div>
