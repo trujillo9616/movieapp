@@ -23,7 +23,7 @@ const TvShowDetails: React.FC = () => {
     const fetchShowData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_URL}tv/${id}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&append_to_response=credits,images,videos,recommendations,watch/providers`
+          `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&append_to_response=credits,images,videos,recommendations,watch/providers`
         );
         setShowData(response.data);
         setLoading(false);
