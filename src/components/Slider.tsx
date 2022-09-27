@@ -11,8 +11,6 @@ interface SliderProps {
 }
 
 const SimpleSlider: React.FC<SliderProps> = ({ title, data }) => {
-  const movie: boolean = data[0]?.name ? false : true;
-
   const settings = {
     dots: false,
     infinite: true,
@@ -27,7 +25,7 @@ const SimpleSlider: React.FC<SliderProps> = ({ title, data }) => {
         {data.map((item: any, index: number) => {
           return (
             <div key={index} className="mx-2">
-              {movie ? (
+              {item.title ? (
                 <MovieCard
                   id={item.id}
                   title={item.title}
