@@ -8,7 +8,7 @@ const sections = [
 ];
 const Header: React.FC = () => {
   return (
-    <div className="w-screen h-24 flex flex-row text-sm md:text-xl leading-normal font-extrabold text-gray-200 text-ellipsis">
+    <div className="h-24 flex flex-row text-sm md:text-xl leading-normal font-extrabold text-gray-200 text-ellipsis">
       <div className="w-1/3 p-8 self-center">
         <Link href="/">
           <a>
