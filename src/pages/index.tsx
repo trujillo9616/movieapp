@@ -1,15 +1,14 @@
 import type { NextPage } from "next";
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Header from "../components/Header";
 import axios from "axios";
-import { movieList, seriesList } from "../utils/obj";
 import SimpleSlider from "../components/Slider";
 import Footer from "../components/Footer";
+import MyHead from "../components/MyHead";
 
 const Home: NextPage = () => {
   const [trendingData, setTrendingData] = useState([]);
-  const [moviesData, setMovieDate] = useState<any>([]);
+  const [moviesData, setMovieData] = useState<any>([]);
   const [showsData, setShowsData] = useState<any>([]);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ const Home: NextPage = () => {
         const response = await axios.get(
           `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
         );
-        setMovieDate(response.data.results);
+        setMovieData(response.data.results);
       } catch (error) {
         console.log(error);
       }
@@ -49,29 +48,22 @@ const Home: NextPage = () => {
 
     return () => {
       setTrendingData([]);
-      setMovieDate([]);
+      setMovieData([]);
       setShowsData([]);
     };
   }, []);
 
   return (
     <>
-      <Head>
-        <title>MovieApp</title>
-        <meta
-          name="description"
-          content="Web app with useful information about movies"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="flex flex-col bg-neutral-900">
+      <MyHead title="Home" />
+      <div className="flex flex-col main__background">
         <div>
           <Header />
         </div>
-        <div>
-          <SimpleSlider title="Trending" data={trendingData} />
-          <SimpleSlider title={"Trending Movies!"} data={moviesData} />
-          <SimpleSlider title={"Trending TV Shows!"} data={showsData} />
+        <div className="px-10">
+          <SimpleSlider title={"Trending Items!"} data={trendingData} />
+          <SimpleSlider title={"Trending Movies"} data={moviesData} />
+          <SimpleSlider title={"Trending TV Shows"} data={showsData} />
         </div>
         <div>
           <Footer />
