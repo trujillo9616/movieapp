@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Header from "../../components/Header";
+import MyHead from "../../components/MyHead";
 import { useRouter } from "next/router";
 import axios from "axios";
 import moment from "moment";
@@ -56,98 +57,99 @@ const MovieDetails: React.FC = () => {
   const onDemand = watchProviders?.buy || [];
 
   return (
-    <div className="detail">
-      <div className="detail__top">
-        <div className="detail__image">
-          <Image
-            src={`https://image.tmdb.org/t/p/original${movieData.backdrop_path}`}
-            alt={movieData.title}
-            layout="fill"
-            objectFit="cover"
-            loading="eager"
-            placeholder="blur"
-            blurDataURL={`https://image.tmdb.org/t/p/original${movieData.backdrop_path}`}
-            priority
-          />
-        </div>
-        <div className="detail__filter" />
-        <div className="detail__content">
-          <div className="detail__header">
+    <div>
+      <MyHead title={movieData?.title} />
+      <div className="detail">
+        <div className="detail__top">
+          <div className="detail__image">
+            <Image
+              src={`https://image.tmdb.org/t/p/original${movieData.backdrop_path}`}
+              alt={movieData.title}
+              layout="fill"
+              objectFit="cover"
+              loading="eager"
+              placeholder="blur"
+              blurDataURL={`https://image.tmdb.org/t/p/original${movieData.backdrop_path}`}
+              priority
+            />
+          </div>
+          <div className="detail__filter" />
+          <div className="detail__content">
             <Header />
-          </div>
-          <div className="flex flex-row h-full">
-            <div className="detail__info-left">
-              <div className="detail__info-left__top">
-                <label className="detail__title">{movieData.title}</label>
-                <label className="detail__tagline">{`"${movieData.tagline}"`}</label>
-                <p className="detail__overview">{movieData.overview}</p>
-              </div>
-              <div className="detail__info-left__bottom">
-                <label className="detail__overview">{`Runtime: ${movieData.runtime} min`}</label>
-                <label className="detail__overview">{`Release Date: ${moment(
-                  movieData.release_date,
-                  "YYYY-MM-DD"
-                ).format("LL")}`}</label>
-                <label className="detail__overview">{`Status: ${movieData.status}`}</label>
-                <label className="detail__overview">{`Budget: $${formatNumber(
-                  movieData.budget
-                )}`}</label>
-                <label className="detail__overview">{`Production Countries: ${getCountries(
-                  movieData.production_countries
-                )}`}</label>
-                <div>
-                  <label className="detail__overview">Average Rating: </label>
-                  <StarRatings
-                    rating={movieData.vote_average / 2}
-                    starRatedColor="rgb(168 85 247)"
-                    numberOfStars={5}
-                    name="rating"
-                    starDimension="10px"
-                    starSpacing="2px"
-                  />
+            <div className="flex flex-row h-full">
+              <div className="detail__info-left">
+                <div className="detail__info-left__top">
+                  <label className="detail__title">{movieData.title}</label>
+                  <label className="detail__tagline">{`"${movieData.tagline}"`}</label>
+                  <p className="detail__overview">{movieData.overview}</p>
                 </div>
-              </div>
-            </div>
-            <div className="detail__info-right">
-              <div className="detail__info-right__top">
-                <div className="flex flex-col">
-                  {streaming.length > 0 && (
-                    <label className="detail__overview">
-                      Available on Streaming:{" "}
-                    </label>
-                  )}
-                  <div className="flex flex-row">
-                    {streaming.map((provider: any, index: number) => (
-                      <WatchProvider key={index} {...provider} />
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  {onDemand.length > 0 && (
-                    <label className="detail__overview">
-                      Available on Demand:{" "}
-                    </label>
-                  )}
-                  <div className="flex flex-row">
-                    {onDemand.map((provider: any, index: number) => (
-                      <WatchProvider key={index} {...provider} />
-                    ))}
+                <div className="detail__info-left__bottom">
+                  <label className="detail__overview">{`Runtime: ${movieData.runtime} min`}</label>
+                  <label className="detail__overview">{`Release Date: ${moment(
+                    movieData.release_date,
+                    "YYYY-MM-DD"
+                  ).format("LL")}`}</label>
+                  <label className="detail__overview">{`Status: ${movieData.status}`}</label>
+                  <label className="detail__overview">{`Budget: $${formatNumber(
+                    movieData.budget
+                  )}`}</label>
+                  <label className="detail__overview">{`Production Countries: ${getCountries(
+                    movieData.production_countries
+                  )}`}</label>
+                  <div>
+                    <label className="detail__overview">Average Rating: </label>
+                    <StarRatings
+                      rating={movieData.vote_average / 2}
+                      starRatedColor="rgb(168 85 247)"
+                      numberOfStars={5}
+                      name="rating"
+                      starDimension="10px"
+                      starSpacing="2px"
+                    />
                   </div>
                 </div>
               </div>
-              <div className="detail__info-right__bottom">
-                {trailerKey && (
-                  <YouTubeEmbed
-                    embedId={trailerKey}
-                    title={`${movieData.title} Trailer`}
-                  />
-                )}
+              <div className="detail__info-right">
+                <div className="detail__info-right__top">
+                  <div className="flex flex-col">
+                    {streaming.length > 0 && (
+                      <label className="detail__overview">
+                        Available on Streaming:{" "}
+                      </label>
+                    )}
+                    <div className="flex flex-row">
+                      {streaming.map((provider: any, index: number) => (
+                        <WatchProvider key={index} {...provider} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex flex-col">
+                    {onDemand.length > 0 && (
+                      <label className="detail__overview">
+                        Available on Demand:{" "}
+                      </label>
+                    )}
+                    <div className="flex flex-row">
+                      {onDemand.map((provider: any, index: number) => (
+                        <WatchProvider key={index} {...provider} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="detail__info-right__bottom">
+                  {trailerKey && (
+                    <YouTubeEmbed
+                      embedId={trailerKey}
+                      title={`${movieData.title} Trailer`}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div className="detail__bottom">Movie Details of {id}</div>
       </div>
-      <div className="detail__bottom">Movie Details of {id}</div>
     </div>
   );
 };

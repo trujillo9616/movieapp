@@ -12,6 +12,7 @@ import {
   getWatchProviders,
   getCountries,
 } from "../../utils/helper";
+import MyHead from "../../components/MyHead";
 
 const TvShowDetails: React.FC = () => {
   const router = useRouter();
@@ -57,96 +58,98 @@ const TvShowDetails: React.FC = () => {
   console.log("Show Data: ", showData);
 
   return (
-    <div className="detail">
-      <div className="detail__top">
-        <div className="detail__image">
-          <Image
-            src={`https://image.tmdb.org/t/p/original${showData.backdrop_path}`}
-            alt={showData.name}
-            layout="fill"
-            objectFit="cover"
-            loading="eager"
-            placeholder="blur"
-            blurDataURL={`https://image.tmdb.org/t/p/original${showData.backdrop_path}`}
-            priority
-          />
-        </div>
-        <div className="detail__filter" />
-        <div className="detail__content">
-          <div className="detail__header">
+    <div>
+      <MyHead title={showData?.name} />
+
+      <div className="detail">
+        <div className="detail__top">
+          <div className="detail__image">
+            <Image
+              src={`https://image.tmdb.org/t/p/original${showData.backdrop_path}`}
+              alt={showData.name}
+              layout="fill"
+              objectFit="cover"
+              loading="eager"
+              placeholder="blur"
+              blurDataURL={`https://image.tmdb.org/t/p/original${showData.backdrop_path}`}
+              priority
+            />
+          </div>
+          <div className="detail__filter" />
+          <div className="detail__content">
             <Header />
-          </div>
-          <div className="flex flex-row h-full">
-            <div className="detail__info-left">
-              <div className="detail__info-left__top">
-                <label className="detail__title">{showData.name}</label>
-                <label className="detail__tagline">{`"${showData.tagline}"`}</label>
-                <p className="detail__overview">{showData.overview}</p>
-              </div>
-              <div className="detail__info-left__bottom">
-                <label className="detail__overview">{`First Air Date: ${moment(
-                  showData.first_air_date,
-                  "YYYY-MM-DD"
-                ).format("LL")}`}</label>
-                <label className="detail__overview">{`Number of Episodes: ${showData.number_of_episodes}`}</label>
-                <label className="detail__overview">{`Number of Seasons: ${showData.number_of_seasons}`}</label>
-                <label className="detail__overview">{`Status: ${showData.status}`}</label>
-                <label className="detail__overview">{`Production Countries: ${getCountries(
-                  showData.production_countries
-                )}`}</label>
-                <div>
-                  <label className="detail__overview">Average Rating: </label>
-                  <StarRatings
-                    rating={showData.vote_average / 2}
-                    starRatedColor="rgb(168 85 247)"
-                    numberOfStars={5}
-                    name="rating"
-                    starDimension="10px"
-                    starSpacing="2px"
-                  />
+            <div className="flex flex-row h-full">
+              <div className="detail__info-left">
+                <div className="detail__info-left__top">
+                  <label className="detail__title">{showData.name}</label>
+                  <label className="detail__tagline">{`"${showData.tagline}"`}</label>
+                  <p className="detail__overview">{showData.overview}</p>
                 </div>
-              </div>
-            </div>
-            <div className="detail__info-right">
-              <div className="detail__info-right__top">
-                <div className="flex flex-col">
-                  {streaming.length > 0 && (
-                    <label className="detail__overview">
-                      Available on Streaming:{" "}
-                    </label>
-                  )}
-                  <div className="flex flex-row">
-                    {streaming.map((provider: any, index: number) => (
-                      <WatchProvider key={index} {...provider} />
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  {onDemand.length > 0 && (
-                    <label className="detail__overview">
-                      Available on Demand:{" "}
-                    </label>
-                  )}
-                  <div className="flex flex-row">
-                    {onDemand.map((provider: any, index: number) => (
-                      <WatchProvider key={index} {...provider} />
-                    ))}
+                <div className="detail__info-left__bottom">
+                  <label className="detail__overview">{`First Air Date: ${moment(
+                    showData.first_air_date,
+                    "YYYY-MM-DD"
+                  ).format("LL")}`}</label>
+                  <label className="detail__overview">{`Number of Episodes: ${showData.number_of_episodes}`}</label>
+                  <label className="detail__overview">{`Number of Seasons: ${showData.number_of_seasons}`}</label>
+                  <label className="detail__overview">{`Status: ${showData.status}`}</label>
+                  <label className="detail__overview">{`Production Countries: ${getCountries(
+                    showData.production_countries
+                  )}`}</label>
+                  <div>
+                    <label className="detail__overview">Average Rating: </label>
+                    <StarRatings
+                      rating={showData.vote_average / 2}
+                      starRatedColor="rgb(168 85 247)"
+                      numberOfStars={5}
+                      name="rating"
+                      starDimension="10px"
+                      starSpacing="2px"
+                    />
                   </div>
                 </div>
               </div>
-              <div className="detail__info-right__bottom">
-                {trailerKey && (
-                  <YouTubeEmbed
-                    embedId={trailerKey}
-                    title={`${showData.name} Trailer`}
-                  />
-                )}
+              <div className="detail__info-right">
+                <div className="detail__info-right__top">
+                  <div className="flex flex-col">
+                    {streaming.length > 0 && (
+                      <label className="detail__overview">
+                        Available on Streaming:{" "}
+                      </label>
+                    )}
+                    <div className="flex flex-row">
+                      {streaming.map((provider: any, index: number) => (
+                        <WatchProvider key={index} {...provider} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex flex-col">
+                    {onDemand.length > 0 && (
+                      <label className="detail__overview">
+                        Available on Demand:{" "}
+                      </label>
+                    )}
+                    <div className="flex flex-row">
+                      {onDemand.map((provider: any, index: number) => (
+                        <WatchProvider key={index} {...provider} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="detail__info-right__bottom">
+                  {trailerKey && (
+                    <YouTubeEmbed
+                      embedId={trailerKey}
+                      title={`${showData.name} Trailer`}
+                    />
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div className="detail__bottom">Movie Details of {id}</div>
       </div>
-      <div className="detail__bottom">Movie Details of {id}</div>
     </div>
   );
 };
