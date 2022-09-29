@@ -31,6 +31,9 @@ const MovieCard: React.FC<MovieCardProps> = ({
             layout="intrinsic"
             width={200}
             height={300}
+            placeholder="blur"
+            blurDataURL={`https://image.tmdb.org/t/p/original${poster_path}`}
+            priority
           />
         </div>
         <Link href={`/movies/${id}`}>

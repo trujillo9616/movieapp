@@ -30,6 +30,9 @@ const TvShowCard: React.FC<TvShowCardProps> = ({
             alt={`${name} Poster`}
             width={300}
             height={450}
+            placeholder="blur"
+            blurDataURL={`https://image.tmdb.org/t/p/original${poster_path}`}
+            priority
           />
         </div>
         <Link href={`/tv/${id}`}>
