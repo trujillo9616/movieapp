@@ -7,77 +7,85 @@ import Footer from "../../components/Footer";
 import MyHead from "../../components/MyHead";
 
 const MoviesHome: NextPage = () => {
-  const [nowPlayingData, setNowPlayingData] = useState([]);
-  const [popularData, setPopularData] = useState<any>([]);
-  const [topRatedData, setTopRatedData] = useState<any>([]);
-  const [upcomingData, setUpcomingData] = useState<any>([]);
+  const [data, setData] = useState<any>({
+    nowPlaying: null,
+    upcoming: null,
+    popular: null,
+    topRated: null,
+  });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchNowPlaying() {
+    async function fetchData() {
       try {
-        const response = await axios.get(
+        const nowPlaying = await axios.get(
           `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
         );
-        setNowPlayingData(response.data.results);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    async function fetchPopular() {
-      try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-        );
-        setPopularData(response.data.results);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    async function fetchTopRated() {
-      try {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
-        );
-        setTopRatedData(response.data.results);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    async function fetchUpcoming() {
-      try {
-        const response = await axios.get(
+        const upcoming = await axios.get(
           `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
         );
-        setUpcomingData(response.data.results);
+        const popular = await axios.get(
+          `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+        );
+        const topRated = await axios.get(
+          `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+        );
+
+        setData({
+          nowPlaying: nowPlaying.data.results,
+          upcoming: upcoming.data.results,
+          popular: popular.data.results,
+          topRated: topRated.data.results,
+        });
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
     }
-    fetchNowPlaying();
-    fetchPopular();
-    fetchTopRated();
-    fetchUpcoming();
+
+    fetchData();
 
     return () => {
-      setNowPlayingData([]);
-      setPopularData([]);
-      setTopRatedData([]);
-      setUpcomingData([]);
+      setData({
+        nowPlaying: null,
+        upcoming: null,
+        popular: null,
+        topRated: null,
+      });
+      setLoading(true);
     };
   }, []);
 
+  console.log(data);
+
   return (
     <>
-      <MyHead title="Movies" />
+      <MyHead title="MovieApp - Movies" />
       <div className="flex flex-col main__background">
         <div>
           <Header />
         </div>
+        <div className="flex flex-col justify-center self-center py-10 text-white px-4 items-center">
+          <span className="text-lg md:text-7xl antialiased font-bold tracking-wide text-inherit">
+            Movies
+          </span>
+          <span className="self-center py-5">
+            Learn more about your favorite movies!
+          </span>
+        </div>
         <div className="px-10">
-          <SimpleSlider title={"Now Playing"} data={nowPlayingData} />
-          <SimpleSlider title={"Popular"} data={popularData} />
-          <SimpleSlider title={"Top Rated"} data={topRatedData} />
-          <SimpleSlider title={"Upcoming"} data={upcomingData} />
+          {loading ? (
+            <div className="flex justify-center items-center h-screen">
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-neutral-800"></div>
+            </div>
+          ) : (
+            <div className="px-10">
+              <SimpleSlider title={"Now Playing"} data={data.nowPlaying} />
+              <SimpleSlider title={"Popular"} data={data.popular} />
+              <SimpleSlider title={"Top Rated"} data={data.topRated} />
+              <SimpleSlider title={"Upcoming"} data={data.upcoming} />
+            </div>
+          )}
         </div>
         <div>
           <Footer />
