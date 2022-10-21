@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import SearchBar from "./SearchBar";
 
 const sections = [
   { title: "Movies", url: "/movies" },
@@ -12,12 +13,14 @@ const Header: React.FC = () => {
       <div className="w-1/3 p-8 self-center">
         <Link href="/">
           <a>
-            <h1>MovieApp</h1>
+            <h1>
+              🎬 Movie<span className="hover:text-purple-500">App</span>
+            </h1>
           </a>
         </Link>
       </div>
       <div className="w-1/3 p-2 self-center">
-        <h1>SearchBar</h1>
+        <SearchBar />
       </div>
       <div className="flex flex-row w-1/3 space-x-16 justify-center p-2 self-center">
         {sections.map((section) => (
