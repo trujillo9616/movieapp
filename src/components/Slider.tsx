@@ -4,10 +4,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MovieCard from "./MovieCard";
 import TvShowCard from "./TvShowCard";
+import PersonCard from "./PersonCard";
 
 interface SliderProps {
   title: string;
-  data: any;
+  data: Array<any>;
 }
 
 const SimpleSlider: React.FC<SliderProps> = ({ title, data }) => {
@@ -15,7 +16,7 @@ const SimpleSlider: React.FC<SliderProps> = ({ title, data }) => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 8,
+    slidesToShow: data.length > 8 ? 8 : data.length,
     swipeToSlide: true,
     arrows: false,
     autoplay: true,
@@ -69,7 +70,7 @@ const SimpleSlider: React.FC<SliderProps> = ({ title, data }) => {
                     genre_ids={item.genre_ids}
                     vote_average={item.vote_average}
                   />
-                ) : (
+                ) : item.vote_average ? (
                   <TvShowCard
                     id={item.id}
                     name={item.name}
@@ -77,6 +78,15 @@ const SimpleSlider: React.FC<SliderProps> = ({ title, data }) => {
                     first_air_date={item.first_air_date}
                     genre_ids={item.genre_ids}
                     vote_average={item.vote_average}
+                  />
+                ) : (
+                  <PersonCard
+                    id={item.id}
+                    name={item.name}
+                    character={item.character || null}
+                    job={item.job || null}
+                    profile_path={item.profile_path}
+                    known_for_department={item.known_for_department}
                   />
                 )}
               </div>
