@@ -27,7 +27,7 @@ const PersonCard: React.FC<PersonCardProps> = ({
             src={
               profile_path
                 ? `https://image.tmdb.org/t/p/w500${profile_path}`
-                : "/missingPhoto.jpg"
+                : "/missingPhoto.png"
             }
             alt={`${name} Photo`}
             layout="intrinsic"
@@ -37,7 +37,7 @@ const PersonCard: React.FC<PersonCardProps> = ({
             blurDataURL={
               profile_path
                 ? `https://image.tmdb.org/t/p/original${profile_path}`
-                : "/missingPhoto.jpg"
+                : "/missingPhoto.png"
             }
             priority
           />

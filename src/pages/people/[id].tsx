@@ -7,6 +7,7 @@ import moment from "moment";
 import MyHead from "../../components/MyHead";
 import Footer from "../../components/Footer";
 import SimpleSlider from "../../components/Slider";
+import { getZodiacSign } from "../../utils/helper";
 
 const PersonDetails: React.FC = () => {
   const router = useRouter();
@@ -52,13 +53,21 @@ const PersonDetails: React.FC = () => {
         <div className="flex flex-row justify-items-center px-20">
           <div className="justify-center self">
             <Image
-              src={`https://image.tmdb.org/t/p/w500${personData.profile_path}`}
+              src={
+                personData.profile_path
+                  ? `https://image.tmdb.org/t/p/w500${personData.profile_path}`
+                  : "/missingPhoto.png"
+              }
               alt={`${personData.name} profile image`}
               layout="intrinsic"
               width={200}
               height={300}
               placeholder="blur"
-              blurDataURL={`https://image.tmdb.org/t/p/original${personData.profile_path}`}
+              blurDataURL={
+                personData.profile_path
+                  ? `https://image.tmdb.org/t/p/w500${personData.profile_path}`
+                  : "/missingPhoto.png"
+              }
               priority
             />
           </div>
@@ -68,8 +77,21 @@ const PersonDetails: React.FC = () => {
             <div className="flex flex-col">
               <p className="text-lg font-normal">
                 🎂{" "}
-                {moment(personData.birthday).format("MMMM Do, YYYY") || "N/A"}
+                {`${moment(personData.birthday).format(
+                  "MMMM Do, YYYY"
+                )} (${getZodiacSign(personData.birthday)})` || "Unknown"}
               </p>
+              {personData.deathday !== null && (
+                <p className="text-lg font-normal">
+                  💀{" "}
+                  {`${moment(personData.deathday).format(
+                    "MMMM Do, YYYY"
+                  )} (${moment(personData.deathday).diff(
+                    personData.birthday,
+                    "years"
+                  )} years old) `}
+                </p>
+              )}
               <p className="text-lg font-normal">
                 📍 {personData.place_of_birth || "Unknown"}
               </p>

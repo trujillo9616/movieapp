@@ -26,13 +26,21 @@ const MovieCard: React.FC<MovieCardProps> = ({
       <div className="card">
         <div className="card__image">
           <Image
-            src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+            src={
+              poster_path
+                ? `https://image.tmdb.org/t/p/w500${poster_path}`
+                : "/missingMovie.png"
+            }
             alt={`${title} Poster`}
             layout="intrinsic"
             width={200}
             height={300}
             placeholder="blur"
-            blurDataURL={`https://image.tmdb.org/t/p/original${poster_path}`}
+            blurDataURL={
+              poster_path
+                ? `https://image.tmdb.org/t/p/w500${poster_path}`
+                : "/missingMovie.png"
+            }
             priority
           />
         </div>
