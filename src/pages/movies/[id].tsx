@@ -14,6 +14,8 @@ import {
 import StarRatings from "react-star-ratings";
 import YouTubeEmbed from "../../components/YouTubeEmbed";
 import WatchProvider from "../../components/WatchProvider";
+import SimpleSlider from "../../components/Slider";
+import Footer from "../../components/Footer";
 
 const MovieDetails: React.FC = () => {
   const router = useRouter();
@@ -148,7 +150,19 @@ const MovieDetails: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="detail__bottom">Movie Details of {id}</div>
+        <div className="main__background detail__bottom">
+          <div className="px-10">
+            <SimpleSlider title="Cast" data={movieData?.credits?.cast} />
+            <SimpleSlider title="Crew" data={movieData?.credits?.crew} />
+            {movieData?.recommendations?.results.length > 0 && (
+              <SimpleSlider
+                title="If you liked this movie, you might also like..."
+                data={movieData?.recommendations?.results}
+              />
+            )}
+          </div>
+          <Footer />
+        </div>
       </div>
     </div>
   );
