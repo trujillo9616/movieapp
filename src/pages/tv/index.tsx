@@ -1,119 +1,86 @@
 import type { NextPage } from "next";
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Header from "../../components/Header";
 import axios from "axios";
 import SimpleSlider from "../../components/Slider";
 import Footer from "../../components/Footer";
+import MyHead from "../../components/MyHead";
 
-const MoviesHome: NextPage = () => {
-  const [airingTodayData, setAiringTodayData] = useState([]);
-  const [ongoingData, setOngoingData] = useState<any>([]);
-  const [popularData, setPopularData] = useState<any>([]);
-  const [topRatedData, setTopRatedData] = useState<any>([]);
-  const [loadingAiringToday, setLoadingAiringToday] = useState(true);
-  const [loadingOngoing, setLoadingOngoing] = useState(true);
-  const [loadingPopular, setLoadingPopular] = useState(true);
-  const [loadingTopRated, setLoadingTopRated] = useState(true);
-  const [finishedLoading, setFinishedLoading] = useState(false);
+const TvHome: NextPage = () => {
+  const [data, setData] = useState<any>({
+    airingToday: null,
+    ongoing: null,
+    popular: null,
+    topRated: null,
+  });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchAiringToday() {
+    async function fetchData() {
       try {
-        const response = await axios.get(
+        const airingToday = await axios.get(
           `https://api.themoviedb.org/3/tv/airing_today?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
         );
-        setAiringTodayData(response.data.results);
-        setLoadingAiringToday(false);
-        countLoader();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    async function fetchOngoing() {
-      try {
-        const response = await axios.get(
+        const ongoing = await axios.get(
           `https://api.themoviedb.org/3/tv/on_the_air?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
         );
-        setOngoingData(response.data.results);
-        setLoadingOngoing(false);
-        countLoader();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    async function fetchPopular() {
-      try {
-        const response = await axios.get(
+        const popular = await axios.get(
           `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
         );
-        setPopularData(response.data.results);
-        setLoadingPopular(false);
-        countLoader();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    async function fetchTopRated() {
-      try {
-        const response = await axios.get(
+        const topRated = await axios.get(
           `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
         );
-        setTopRatedData(response.data.results);
-        setLoadingTopRated(false);
-        countLoader();
+
+        setData({
+          airingToday: airingToday.data.results,
+          ongoing: ongoing.data.results,
+          popular: popular.data.results,
+          topRated: topRated.data.results,
+        });
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
     }
-    fetchAiringToday();
-    fetchOngoing();
-    fetchPopular();
-    fetchTopRated();
+
+    fetchData();
 
     return () => {
-      setAiringTodayData([]);
-      setOngoingData([]);
-      setPopularData([]);
-      setTopRatedData([]);
+      setData({
+        airingToday: null,
+        ongoing: null,
+        popular: null,
+        topRated: null,
+      });
+      setLoading(true);
     };
   }, []);
 
-  const countLoader = () => {
-    if (
-      !loadingAiringToday &&
-      !loadingOngoing &&
-      !loadingPopular &&
-      !loadingTopRated
-    ) {
-      setFinishedLoading(true);
-    }
-  };
-
   return (
     <>
-      <Head>
-        <title>MovieApp</title>
-        <meta
-          name="description"
-          content="Web app with useful information about movies"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <div className="flex flex-col bg-neutral-900">
+      <MyHead title="MovieApp - TV Shows" />
+      <div className="flex flex-col main__background">
         <div>
           <Header />
         </div>
-        {finishedLoading ? (
+        <div className="flex flex-col justify-center self-center py-10 text-white px-4 items-center">
+          <span className="text-lg md:text-7xl antialiased font-bold tracking-wide text-inherit">
+            TV Shows
+          </span>
+          <span className="self-center py-5">
+            Learn more about your favorite shows!
+          </span>
+        </div>
+        {loading ? (
           <div className="flex justify-center items-center h-screen">
             <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-neutral-800"></div>
           </div>
         ) : (
           <div className="px-10">
-            <SimpleSlider title={"Airing Today"} data={airingTodayData} />
-            <SimpleSlider title={"Ongoing Shows"} data={ongoingData} />
-            <SimpleSlider title={"Popular"} data={popularData} />
-            <SimpleSlider title={"Top Rated"} data={topRatedData} />
+            <SimpleSlider title={"Airing Today"} data={data.airingToday} />
+            <SimpleSlider title={"Ongoing Shows"} data={data.ongoing} />
+            <SimpleSlider title={"Popular"} data={data.popular} />
+            <SimpleSlider title={"Top Rated"} data={data.topRated} />
           </div>
         )}
         <div>
@@ -124,4 +91,4 @@ const MoviesHome: NextPage = () => {
   );
 };
 
-export default MoviesHome;
+export default TvHome;
