@@ -13,6 +13,8 @@ import {
   getCountries,
 } from "../../utils/helper";
 import MyHead from "../../components/MyHead";
+import Footer from "../../components/Footer";
+import SimpleSlider from "../../components/Slider";
 
 const TvShowDetails: React.FC = () => {
   const router = useRouter();
@@ -148,7 +150,19 @@ const TvShowDetails: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="detail__bottom">Movie Details of {id}</div>
+        <div className="main__background detail__bottom">
+          <div className="px-10">
+            <SimpleSlider title="Cast" data={showData?.credits?.cast} />
+            <SimpleSlider title="Crew" data={showData?.credits?.crew} />
+            {showData?.recommendations?.results.length > 0 && (
+              <SimpleSlider
+                title="If you liked this show, you might also like..."
+                data={showData?.recommendations?.results}
+              />
+            )}
+          </div>
+          <Footer />
+        </div>
       </div>
     </div>
   );
